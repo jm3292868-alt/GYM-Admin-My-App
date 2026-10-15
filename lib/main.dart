@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'login_screen.dart'; 
+import 'package:flutter_application_1/Screens/login_screen.dart';
+import 'package:flutter_application_1/Screens/homeinit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App Supabase',
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(), // Pantalla inicial de la app
+      //home: const LoginScreen(),// // Pantalla inicial de la app
+      initialRoute: '/', // Ruta inicial
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(), // Ruta para la pantalla de inicio
+      },
     );
   }
 }
+
+

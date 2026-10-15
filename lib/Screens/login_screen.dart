@@ -39,19 +39,21 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Cuenta creada correctamente'),
-          backgroundColor: Colors.green,
+          backgroundColor: Color(0xFF3B82F6),
         ),
       );
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFF87171),
+          
         ),
       );
     } finally {
       if (mounted) {
         setState(() => _cargando = false);
+        Navigator.pushNamed(context, "/home");
       }
     }
   }
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Inicio de sesión exitoso'),
-          backgroundColor: Colors.green,
+          backgroundColor: Color(0xFF3B82F6),
         ),
       );
 
@@ -82,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFF87171),
         ),
       );
     } finally {
@@ -133,7 +135,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _iniciarSesion,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF3B82F6),
+                    foregroundColor: Colors.white,
+                  ),
                   child: const Text('Iniciar sesión'),
+                  
                 ),
               ),
 
@@ -144,7 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   onPressed: _crearCuenta,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color(0xFF3B82F6),
+                    foregroundColor: Colors.white,
                   ),
                   child: const Text('Crear cuenta'),
                 ),
