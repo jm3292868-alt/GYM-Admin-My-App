@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../widgets/password_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,11 +10,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController =
-      TextEditingController(text: 'jm3292868@gmail.com');
-
-  final _passwordController =
-      TextEditingController(text: '123456');
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   bool _cargando = false;
 
@@ -24,41 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // REGISTRAR USUARIO
-  Future<void> _crearCuenta() async {
-    setState(() => _cargando = true);
-
-    try {
-      await Supabase.instance.client.auth.signUp(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Cuenta creada correctamente'),
-          backgroundColor: Color(0xFF3B82F6),
-        ),
-      );
-    } on AuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message),
-          backgroundColor: Color(0xFFF87171),
-          
-        ),
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _cargando = false);
-        Navigator.pushNamed(context, "/home");
-      }
-    }
-  }
-
-  // INICIAR SESIÓN
   Future<void> _iniciarSesion() async {
     setState(() => _cargando = true);
 
@@ -77,14 +40,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-      // Aquí puedes navegar a HomeScreen
-      // Navigator.pushReplacement(...);
-
+      Navigator.pushReplacementNamed(context, '/home');
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
-          backgroundColor: Color(0xFFF87171),
+          backgroundColor: Colors.red,
         ),
       );
     } finally {
@@ -98,67 +59,64 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Supabase Login'),
+        title: const Text('Iniciar Sesión'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                labelText: 'Correo electrónico',
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Contraseña',
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            if (_cargando)
-              const CircularProgressIndicator()
-            else ...[
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _iniciarSesion,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF3B82F6),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Iniciar sesión'),
-                  
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/logo.png',
+                  width: 150,
                 ),
-              ),
 
-              const SizedBox(height: 10),
+                const SizedBox(height: 35),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _crearCuenta,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF3B82F6),
-                    foregroundColor: Colors.white,
+                TextField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    labelText: 'Correo Electrónico',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.email),
                   ),
-                  child: const Text('Crear cuenta'),
                 ),
-              ),
-            ],
-          ],
+
+                const SizedBox(height: 20),
+
+                PasswordField(
+                  controller: _passwordController,
+                ),
+
+                const SizedBox(height: 35),
+
+                _cargando
+                    ? const CircularProgressIndicator()
+                    : SizedBox(
+                        width: 150,
+                        height: 45,
+                        child: ElevatedButton(
+                          onPressed: _iniciarSesion,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF3B82F6),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: const Text(
+                            'Iniciar Sesión',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+              ],
+            ),
+          ),
         ),
       ),
     );
