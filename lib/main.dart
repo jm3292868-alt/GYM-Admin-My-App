@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Screens/home_init_screen.dart';
 import 'package:flutter_application_1/Screens/Welcome_screen.dart';
 import 'package:flutter_application_1/Screens/register_screen.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

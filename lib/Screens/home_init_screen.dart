@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/user_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,13 +8,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pantalla de inicio'),
+        title: const Text('Control de Usuarios GYM'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              UserMenu.show(context);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             const Text(
               'Bienvenido a la pantalla de inicio',
               style: TextStyle(
@@ -28,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed( 
+                  Navigator.pushNamed(
                     context,
                     '/register',
                   );
@@ -38,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                   foregroundColor: Colors.white,
                 ),
                 child: const Text(
-                  'Crear Cuenta',
+                  'Crear Usuario',
                 ),
               ),
             ),

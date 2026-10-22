@@ -114,6 +114,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
+                       TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/login',
+                    );
+                  },
+                  child: const Text(
+                    'Volver al login',
+                  ),
+                ),
               ],
             ),
           ),
